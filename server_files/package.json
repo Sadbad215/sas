@@ -1,0 +1,15 @@
+cat > package.json << EOF
+{
+  "name": "sas-rat-server",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "node-telegram-bot-api": "^0.64.0",
+    "ws": "^8.14.2"
+  }
+}
+EOF

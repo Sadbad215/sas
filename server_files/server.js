@@ -2,12 +2,24 @@ const TelegramBot = require('node-telegram-bot-api');
 const WebSocket = require('ws');
 const express = require('express');
 const app = express();
-const server = app.listen(3000, () => console.log('Server running on port 3000'));
-const wss = new WebSocket.Server({ server });
+app.use(express.json());  // للـ webhooks
 
 const TOKEN = '7974579225:AAE7NS2E4czBNoll1yh23SqVAlOPt2i-5QM';
 const CHAT_ID = '659334247';
-const bot = new TelegramBot(TOKEN, { polling: true });
+const bot = new TelegramBot(TOKEN);
+
+const PORT = process.env.PORT || 3000;
+const server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const wss = new WebSocket.Server({ server });
+
+// Webhook endpoint لتلجرام (بدلاً من polling)
+app.post(`/bot${TOKEN}`, (req, res) => {
+  bot.processUpdate(req.body);
+  res.sendStatus(200);
+});
+
+// ضبط webhook (شغّل مرة واحدة عند الـ deploy)
+bot.setWebHook(`${process.env.RENDER_EXTERNAL_URL || 'https://sas-dfm3.onrender.com'}/bot${TOKEN}`);
 
 wss.on('connection', (ws) => {
   console.log('Device connected!');
@@ -56,4 +68,4 @@ bot.onText(/\/help/, (msg) => {
   }
 });
 
-console.log('Bot started! Send /start to chat.');
+console.log('Bot webhook set! Service live at https://sas-dfm3.onrender.com');

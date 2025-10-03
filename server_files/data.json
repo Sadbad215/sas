@@ -1,6 +1,4 @@
-cat > data.json << EOF
 {
   "botToken": "7974579225:AAE7NS2E4czBNoll1yh23SqVAlOPt2i-5QM",
   "chatId": "659334247"
 }
-EOF

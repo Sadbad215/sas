@@ -1,4 +1,3 @@
-cat > package.json << EOF
 {
   "name": "sas-rat-server",
   "version": "1.0.0",
@@ -12,4 +11,3 @@ cat > package.json << EOF
     "ws": "^8.14.2"
   }
 }
-EOF
